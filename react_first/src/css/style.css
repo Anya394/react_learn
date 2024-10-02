@@ -44,3 +44,52 @@ main .user {
     background-color: #3e8fa0;
     padding: 20px;
 }
+
+main .delete-icon {
+    float: right;
+    color: #134b57;
+    cursor: pointer;
+    transform: scale(2);
+}
+
+main .edit-icon {
+    float: right;
+    color: #134b57;
+    cursor: pointer;
+    transform: scale(2);
+    margin-right: 25px;
+}
+
+main .delete-icon:hover,
+main .edit-icon:hover {
+    opacity: 0.5;
+}
+
+aside form input:not([type="checkbox"]),
+aside form textarea,
+aside form button {
+    width: 90%;
+    padding: 15px 5%;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 300;
+    margin-bottom: 10px;
+    border: 0;
+    background: #222;
+    color: #fff;
+    outline: none;
+    font-size: 15px;
+}
+
+aside form input[type="checkbox"] {
+    margin: 10px;
+}
+
+aside form button {
+    width: 100%;
+    cursor: pointer;
+    transition: transform 500ms ease;
+}
+
+aside form button:hover{
+    transform: scale(1.08);
+}
