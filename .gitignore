@@ -1,1 +1,25 @@
 /react_first/node_modules/
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/bond_calculator/node_modules
+/bond_calculator/.pnp
+/bond_calculator/.pnp.js
+
+# testing
+/bond_calculator/coverage
+
+# production
+/bond_calculator/build
+
+# misc
+/bond_calculator/.DS_Store
+/bond_calculator/.env.local
+/bond_calculator/.env.development.local
+/bond_calculator/.env.test.local
+/bond_calculator/.env.production.local
+
+/bond_calculator/npm-debug.log*
+/bond_calculator/yarn-debug.log*
+/bond_calculator/yarn-error.log*
