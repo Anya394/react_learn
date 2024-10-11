@@ -1,0 +1,13 @@
+.bond {
+    background-color: #fff;
+    color: #333241;
+    height: 20px;
+    padding: 15px;
+    width: 30%;
+    margin: 0 0px 0 0px;
+    border-radius: 30px;
+}
+
+.couponpercent {
+    float: right;
+}
