@@ -1,16 +1,9 @@
 import React from 'react';
 import XMLParser from 'react-xml-parser';
-import {useState} from 'react';
+import '..\\src\\css\\AddBond.css';
 
 const AddBond = (props) => {
-    const [bond, setBond] = useState({
-        shortname: "",
-        couponpercent: ""
-    });
-
-    const [inputValue, setInputValue] = useState('');
-    const [response, setResponse] = useState({});
-    const [error, setError] = useState(null);
+    //const [error, setError] = useState(null);
     //const [isLoaded, setIsLoaded] = useState(false);
 
 //ref={(el) => myForm = el}
@@ -25,20 +18,31 @@ const AddBond = (props) => {
     };
 
     const handlerClick = async () => {
+        let value = document.getElementById("nameOrTiketBond").value;
+        if (Object.keys(value).length === 0)
+        {
+            console.log("input был пустым")
+            return;
+        }
         const responseFetch = await fetchBond(document.getElementById("nameOrTiketBond").value)
         const attributes = new XMLParser().parseFromString(responseFetch).children[0].children[1];
-        console.log(attributes.children[2].attributes.value)
-        setBond({
+        if (attributes.children.length === 0)
+        {
+            console.log("В input введено некорректное значение")
+            return;
+        }
+        props.onAdd({
             shortname: attributes.children[2].attributes.value,
             couponpercent: attributes.children[19].attributes.value
-        })
-        props.onAdd(bond)
-      };
+        });
+    };
 
-    return <form >
-                <input placeholder="Название или тикет облигации" id='nameOrTiketBond'/>
-                <button type="button" onClick={handlerClick}>Добавить</button>
+    return <div className='divFormAdd'>
+            <form className='formAdd'>
+                <input className='inputAdd' placeholder="Название или тикет облигации" id='nameOrTiketBond'/>
+                <button className='buttonAdd' type="button" onClick={handlerClick}>Добавить</button>
             </form>
+        </div>
 }
 
 export default AddBond

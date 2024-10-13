@@ -1,0 +1,6 @@
+.bonds {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin: 40px 0 0 0;
+}

@@ -4,15 +4,15 @@ import Bonds from './components/Bonds';
 import AddBond from './components/AddBond';
 
 const App = (props) => {
-  const [bonds, setBonds] = useState({bonds: [
+  const [bonds, setBonds] = useState([
     {
-      shortname: "",
-      couponpercent: ""
+      shortname: "Добав",
+      couponpercent: "выпраол"
     }
-  ]});
+  ]);
 
   const addBond = (bond) => {
-    setBonds({ bonds: [...bonds, {...bond}]})
+    setBonds([...bonds, {...bond}])
   }
 
   return (

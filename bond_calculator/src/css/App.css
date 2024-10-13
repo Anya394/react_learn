@@ -1,3 +1,4 @@
+
 .App {
   background-color: #333241;
   min-height: 100vh;
@@ -10,9 +11,4 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
-
-.bonds {
-  width: 50%;
-  height: 20%;
 }
