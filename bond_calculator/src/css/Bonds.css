@@ -1,6 +1,7 @@
 .bonds {
-    width: 100%;
+    width: 50%;
     display: flex;
     justify-content: space-around;
+    flex-direction: column;
     margin: 40px 0 0 0;
 }

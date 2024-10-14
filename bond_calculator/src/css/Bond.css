@@ -2,15 +2,17 @@
 
 .bondBox {
     width: 90%;
+    margin: 0 0 4% 10%;
 }
 
 .bond {
     display: flex;
     justify-content: space-between;
-    background-color: #f2f6d5;
+    align-items: center;
+    background-color: #f2f1f7;
     color: #333241;
     height: 40px;
-    padding: 10px;
+    padding: 10px 20px;
     width: 100%-30px;
     margin: 0 0px 0 0px;
     border-radius: 40px;
@@ -19,4 +21,15 @@
 
 .couponpercent {
     float: right;
+}
+
+.icon {
+    width: 5%;
+    cursor: pointer;
+    transform: scale(1.4);
+    transition: transform 300ms ease;
+}
+
+.icon:hover{
+    transform: scale(1.8);
 }
