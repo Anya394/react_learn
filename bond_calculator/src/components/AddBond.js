@@ -9,7 +9,7 @@ const AddBond = (props) => {
 //ref={(el) => myForm = el}
 
     const fetchBond = async (bondId) => {
-        const res = await fetch(`https://iss.moex.com/iss/securities/${bondId}.xml`);
+        const res = await fetch(`https://iss.moex.com/iss/securities/${bondId}.xml`); // RU000A108BE7
         if (!res.ok) {
             throw res;
         }
@@ -33,7 +33,13 @@ const AddBond = (props) => {
         }
         props.onAdd({
             shortname: attributes.children[2].attributes.value,
-            couponpercent: attributes.children[19].attributes.value
+            name: attributes.children[1].attributes.value,
+            matDate: attributes.children[6].attributes.value,
+            couponValue: attributes.children[20].attributes.value,
+            couponPercent: attributes.children[19].attributes.value,
+            faceValue: attributes.children[15].attributes.value,
+            couponFrequency: attributes.children[17].attributes.value,
+            couponDate: attributes.children[18].attributes.value
         });
     };
 

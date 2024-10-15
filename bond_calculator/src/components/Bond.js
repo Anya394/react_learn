@@ -18,15 +18,16 @@ const Bond = (props) => {
     const [showBond, setShowBond] = useState(false) 
 
     return <div className='bondBox'>
-        <div className='bond'>
+        <div className='bond' id="bond">
             <span className='shortname'>{props.bond.shortname}</span>
             <BsChevronCompactDown className='icon' onClick={() => {
-                    setShowBond(!showBond)
+                    setShowBond(!showBond);
+                    document.getElementById('bond').classList.toggle('fullBondActive');
                 }}/>
             
         </div>
 
-        { showBond && <FullBond />}
+        { showBond && <FullBond fullBond={props.bond} />}
         
     </div>
 }

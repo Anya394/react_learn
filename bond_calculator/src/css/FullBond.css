@@ -1,0 +1,16 @@
+.fullBondBox {
+    background: #f2f1f7;
+    color: #333241;
+    padding: 20px;
+    border-radius: 0px 0px 40px 40px;
+}
+
+.fullBond {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.property {
+    padding: 10px;
+}

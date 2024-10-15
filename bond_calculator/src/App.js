@@ -7,7 +7,13 @@ const App = (props) => {
   const [bonds, setBonds] = useState([
     {
       shortname: "Добав",
-      couponpercent: "выпраол"
+      name: "kjhg",
+      matDate: "lkjhg",
+      couponValue: "lkjhgf",
+      couponPercent: "kjhgf",
+      faceValue: "hgfd",
+      couponFrequency: "jhgf",
+      couponDate: "jhgf"
     }
   ]);
 
