@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import '../css/Bond.css';
 import FullBond from './FullBond';
 
@@ -15,14 +15,31 @@ import { BsChevronCompactDown } from "react-icons/bs"; //вниз
 
 const Bond = (props) => {
 
-    const [showBond, setShowBond] = useState(false) 
+    const [showBond, setShowBond] = useState(false);
+    const [eTarget, setETarget] = useState(null);
+
+    useEffect(() => {
+        if (showBond)
+        {
+            eTarget.parentElement.classList.toggle('fullBondActive')
+            console.log("toggle")
+        }
+
+        return () => {
+            if (showBond)
+            {
+                eTarget.parentElement.classList.toggle('fullBondActive')
+                console.log("toggle out")
+            }
+        }
+    }, [showBond])
 
     return <div className='bondBox'>
-        <div className='bond' id="bond">
+        <div className='bond'>
             <span className='shortname'>{props.bond.shortname}</span>
-            <BsChevronCompactDown className='icon' onClick={() => {
+            <BsChevronCompactDown className='icon' onClick={(e) => {
                     setShowBond(!showBond);
-                    document.getElementById('bond').classList.toggle('fullBondActive');
+                    setETarget(e.target);
                 }}/>
             
         </div>

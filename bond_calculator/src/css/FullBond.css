@@ -3,6 +3,9 @@
     color: #333241;
     padding: 20px;
     border-radius: 0px 0px 40px 40px;
+    font-family: "Montserrat", sans-serif;
+    font-size: calc(1.5px + 1.5vmin);
+    font-weight: 400;
 }
 
 .fullBond {
@@ -11,6 +14,24 @@
     flex-direction: column;
 }
 
+.propertyLine {
+    display: flex;
+    justify-content: space-around;
+}
+
+.propertyBox {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.propertyBox label{
+    font-size: calc(1.1px + 1.1vmin);
+    color: #5a5a63;
+}
+
 .property {
     padding: 10px;
+    border-radius: 10px;
+    background: #d4d3dd;
 }

@@ -17,6 +17,7 @@
     margin: 0 0px 0 0px;
     border-radius: 40px;
     font-family: "Montserrat", sans-serif;
+    font-size: calc(5px + 1.5vmin);
 }
 
 .couponpercent {
