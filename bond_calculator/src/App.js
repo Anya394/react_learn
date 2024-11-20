@@ -13,7 +13,9 @@ const App = (props) => {
       couponPercent: "kjhgf",
       faceValue: "hgfd",
       couponFrequency: "jhgf",
-      couponDate: "jhgf"
+      couponDate: "jhgf",
+      buyCount: "jkjhfth",
+      averagePrice: "ytjyuj"
     }
   ]);
 

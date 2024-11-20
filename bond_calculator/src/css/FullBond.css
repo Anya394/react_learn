@@ -1,10 +1,10 @@
 .fullBondBox {
     background: #f2f1f7;
     color: #333241;
-    padding: 20px;
+    padding: 10px 20px 20px 20px;
     border-radius: 0px 0px 40px 40px;
     font-family: "Montserrat", sans-serif;
-    font-size: calc(1.5px + 1.5vmin);
+    font-size: calc(1.5px + 1.8vmin);
     font-weight: 400;
 }
 
@@ -17,21 +17,74 @@
 .propertyLine {
     display: flex;
     justify-content: space-around;
+    margin: 0 0 10px 0;
+}
+
+.propertyLine .edit {
+    margin: 10px 0 10px 0;
+}
+
+.propertyLine .lineLable{
+    margin: 5px 0 5px 0;
+    font-size: calc(1.5px + 1.5vmin);
+}
+
+.name {
+    width: 100%;
 }
 
 .propertyBox {
     display: flex;
-    justify-content: space-between;
     flex-direction: column;
 }
 
 .propertyBox label{
     font-size: calc(1.1px + 1.1vmin);
     color: #5a5a63;
+    text-align: center;
 }
 
 .property {
     padding: 10px;
     border-radius: 10px;
-    background: #d4d3dd;
+    background: #eae6ed;
+    text-align: center;
+}
+
+.buttonLine {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0 0px 0;
+}
+
+.buttonLine .button {
+    display: flex;
+    justify-content: space-between;
+    font-size: calc(1.5px + 1.5vmin);
+    cursor: pointer;
+    border-radius: 10px;
+    background: #eae6ed;
+    padding: 10px;
+    transition: transform 300ms ease;
+}
+
+.button:hover {
+    transform: scale(1.1);
+}
+
+.buttonLine .edit {
+    width: 36%;
+    background: none;
+    border: 0.5px solid rgb(51, 50, 65, 0.5);
+}
+
+.buttonLine .delete {
+    color: #f34646;
+    background: #f2dbdb;
+    border: 0.5px solid rgb(243, 70, 70, 0.5);
+    width: 22.5%;
+}
+
+.iconButton {
+    transform: scale(1.4);
 }
