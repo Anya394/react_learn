@@ -1,0 +1,10 @@
+Установка реакта в проект:
+1. npm i react
+2. npm i react-dom
+
+Создание пустого шаблонного проекта и установка реакта в него:
+npx create-react-app .
+
+В index.js должны быть:
+import React from 'react';
+import ReactDOM from 'react-dom/client';
