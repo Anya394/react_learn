@@ -27,7 +27,13 @@
 
 
 #QUESTIONNEIRE_GAME
+/google-sheets-database
+/holysheet
+/questionnaire_game_react
+/questionnaire_game/credentials
+
 # dependencies
+/questionnaire_game/.next
 /questionnaire_game/node_modules
 /questionnaire_game/.pnp
 /questionnaire_game/.pnp.js
