@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-//import AnswerOptions from './AnswerOptions';
+import AnswerOptions from './AnswerOptions';
+import RadioQuestion from './RadioQuestion';
+import InputQuestion from './InputQuestion';
+import CheckboxQuestion from './CheckboxQuestion';
 
 export default function Survey() {
     const questions = [
@@ -23,8 +26,15 @@ export default function Survey() {
         }
     ];
 
+    const [responses, setResponses] = useState([]);
+    const [inputQuestion, setInputQuestion] = useState("default");
+    const handleInputChange = (value) => {
+        setInputQuestion(value.target.value)
+    };
+
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [selectedOptionsCheckbox, setSelectedOptionsCheckbox] = useState([]);
+    const [selectedOptionsRadio, setSelectedOptionsRadio] = useState([]);
 
     const handleNextQuestion = () => {
         setCurrentQuestionIndex(prevIndex => prevIndex + 1);
@@ -34,34 +44,41 @@ export default function Survey() {
         setCurrentQuestionIndex(prevIndex => prevIndex - 1);
     };
 
-    const handleCheckboxChange = (option) => {
-        if (selectedOptions.includes(option)) {
-            setSelectedOptions(selectedOptions.filter((item) => item !== option));
-        } else {
-        setSelectedOptions([...selectedOptions, option]);
+    const Check = () => {
+        console.log(inputQuestion)
+        console.log(selectedOptionsRadio)
+        console.log(selectedOptionsCheckbox)
+    }
+
+    const Send = async () => {
+        const form = {
+            a: inputQuestion, 
+            b: selectedOptionsRadio.toString(), 
+            c: selectedOptionsCheckbox.toString()
         }
-    };
+      
+        const response = await fetch('api/send', {
+            method: 'POST',
+            body: JSON.stringify(form)
+        });
+    }
 
     return (
         <div>
             <h1>{questions[currentQuestionIndex].text}</h1>
             { 
                 questions[currentQuestionIndex].type == "input" ? 
-                <input /> :
-                questions[currentQuestionIndex].options.map((option, index) => (
-                    <div key={index} className='option'>
-                        <input
-                        type={questions[currentQuestionIndex].type}
-                        value={option}
-                        checked={selectedOptions.includes(option)}
-                        onChange={() => handleCheckboxChange(option)}
-                        />
-                        {option}
-                    </div>
-                ))
+                <InputQuestion value={inputQuestion} onChange={handleInputChange} /> : 
+                questions[currentQuestionIndex].type == "radio" ?
+                <RadioQuestion options={questions[currentQuestionIndex].options} selectedOptions={selectedOptionsRadio} 
+                    setSelectedOptions={setSelectedOptionsRadio}/> :
+                <CheckboxQuestion options={questions[currentQuestionIndex].options} selectedOptions={selectedOptionsCheckbox} 
+                    setSelectedOptions={setSelectedOptionsCheckbox}/>
             }
             {currentQuestionIndex > 0 && <button onClick={handlePrevQuestion}>Предыдущий вопрос</button>}
             {currentQuestionIndex < questions.length - 1 && <button onClick={handleNextQuestion}>Следующий вопрос</button>}
+            <button onClick={Check}>Check</button>
+            <button onClick={Send}>Send</button>
         </div>
     );
 };

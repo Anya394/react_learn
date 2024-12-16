@@ -18,8 +18,7 @@ export async function POST(req)
       range,
     });*/
 
-    //const content = await req.body.json();
-    //console.log(content)
+    const content = await req.json();
     
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.SHEET_ID,
@@ -28,11 +27,11 @@ export async function POST(req)
       insertDataOption: 'INSERT_ROWS',
       resource: {
         "majorDimension": "ROWS",
-        "values": [[req.body.a,req.body.b,req.body.c]]
+        "values": [[content.a, content.b, content.c]]
       }
     });
 
-    return new Response(req.body);
+    return new Response(response);
   }
   catch (e)
   {
