@@ -5,6 +5,7 @@ import InputQuestion from './InputQuestion';
 import CheckboxQuestion from './CheckboxQuestion';
 
 export default function Survey() {
+
     const questions = [
         {
             id: 1,
@@ -23,6 +24,31 @@ export default function Survey() {
             text: 'Откуда узнали',
             type: 'checkbox',
             options: ['Answer A', 'Answer B', 'Answer C']
+        },
+        {
+            id: 4,
+            text: 'Откуда узнали 2',
+            type: 'checkbox',
+            options: ['Answer A 2', 'Answer B 2', 'Answer C 2']
+        }
+    ];
+
+    const selectedOptionsDefault = [
+        {
+            id: 1,
+            options: []
+        },
+        {
+            id: 2,
+            options: []
+        },
+        {
+            id: 3,
+            options: []
+        },
+        {
+            id: 4,
+            options: []
         }
     ];
 
@@ -35,19 +61,67 @@ export default function Survey() {
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOptionsCheckbox, setSelectedOptionsCheckbox] = useState([]);
     const [selectedOptionsRadio, setSelectedOptionsRadio] = useState([]);
+    const [selectedOptions, setSelectedOptions] = useState([]);
 
     const handleNextQuestion = () => {
+        //debugger;
+        let isExistItem = false;
+        selectedOptions.map((item, index) => {
+            if (item.id == currentQuestionIndex)
+                isExistItem = true;
+        })
+        
+        saveSelectedOptions(isExistItem);
+        setSelectedOptionsCheckbox([])
         setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+        if (isExistItem)
+            setSelectedOptionsCheckbox(selectedOptions[currentQuestionIndex].options);
     };
 
     const handlePrevQuestion = () => {
+        debugger;
+        let isExistItem = false;
+        selectedOptions.map((item, index) => {
+            if (item.id == currentQuestionIndex)
+                isExistItem = true;
+        })
+        
+        saveSelectedOptions(isExistItem);
+        setSelectedOptionsCheckbox([])
         setCurrentQuestionIndex(prevIndex => prevIndex - 1);
+        selectedOptions.map((item, index) => {
+            if (item.id == currentQuestionIndex)
+                isExistItem = true;
+        })
+        if (isExistItem)
+            setSelectedOptionsCheckbox(selectedOptions[currentQuestionIndex].options);
     };
+
+    const saveSelectedOptions = (isExistItem) => {
+        if (isExistItem)
+        {
+            let options = selectedOptions[currentQuestionIndex].options;
+            selectedOptionsCheckbox.map((option, index) => {
+                if (options != null && !options.includes(option))
+                {
+                    options.push(option);
+                    setSelectedOptions([...selectedOptions, {id: currentQuestionIndex, options: options}]);
+                }
+            })
+        }
+        else
+        {
+            setSelectedOptions([...selectedOptions, {id: currentQuestionIndex, options: selectedOptionsCheckbox}]);
+        }
+
+        //setSelectedOptionsCheckbox([])
+    }
 
     const Check = () => {
         console.log(inputQuestion)
         console.log(selectedOptionsRadio)
         console.log(selectedOptionsCheckbox)
+        console.log(selectedOptions)
     }
 
     const Send = async () => {
@@ -72,7 +146,7 @@ export default function Survey() {
                 questions[currentQuestionIndex].type == "radio" ?
                 <RadioQuestion options={questions[currentQuestionIndex].options} selectedOptions={selectedOptionsRadio} 
                     setSelectedOptions={setSelectedOptionsRadio}/> :
-                <CheckboxQuestion options={questions[currentQuestionIndex].options} selectedOptions={selectedOptionsCheckbox} 
+                <CheckboxQuestion id={questions[currentQuestionIndex].id} options={questions[currentQuestionIndex].options} selectedOptions={selectedOptionsCheckbox} 
                     setSelectedOptions={setSelectedOptionsCheckbox}/>
             }
             {currentQuestionIndex > 0 && <button onClick={handlePrevQuestion}>Предыдущий вопрос</button>}

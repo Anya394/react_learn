@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 export default function CheckboxQuestion(props) {
   
   const handleCheckboxChange = (option) => {
-    if (props.selectedOptions.includes(option)) {
-      props.setSelectedOptions(props.selectedOptions.filter((item) => item !== option));
-    } else {
-      props.setSelectedOptions([...props.selectedOptions, option]);
-    }
+      if (props.selectedOptions.includes(option)) {
+        props.setSelectedOptions(props.selectedOptions.filter((item) => item !== option));
+      } else {
+        props.setSelectedOptions([...props.selectedOptions, option]);
+      }
 };
 
   return (

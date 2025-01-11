@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 export default function RadioQuestion(props) {
 
   const handleRadioChange = (option) => {
-    debugger;
     if (props.selectedOptions.includes(option)) {
       props.setSelectedOptions(props.selectedOptions.filter((item) => item !== option));
     } else {
