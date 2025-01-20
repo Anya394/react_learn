@@ -17,7 +17,6 @@ export async function POST(req)
       spreadsheetId: process.env.SHEET_ID,
       range,
     });*/
-
     const content = await req.json();
     
     const response = await sheets.spreadsheets.values.append({
@@ -30,11 +29,11 @@ export async function POST(req)
         "values": [[content.a, content.b, content.c]]
       }
     });
-
+    console.log("Successful appended.")
     return new Response(response);
   }
   catch (e)
   {
-      return new Response(JSON.stringify("Error:" + e.message));
+    return new Response(JSON.stringify("Error:" + e.message));
   }
 }

@@ -10,125 +10,90 @@ export default function Survey() {
         {
             id: 1,
             text: 'Ваше имя',
-            type: 'input',
-            options: []
+            options: [],
+            multiple: false
         },
         {
             id: 2,
             text: 'Что хотите',
-            type: 'radio',
-            options: ['Option A', 'Option B', 'Option C']
+            options: ['Option A', 'Option B', 'Option C'],
+            multiple: false
         },
         {
             id: 3,
             text: 'Откуда узнали',
-            type: 'checkbox',
-            options: ['Answer A', 'Answer B', 'Answer C']
+            options: ['Answer A', 'Answer B', 'Answer C'],
+            multiple: true
         },
         {
             id: 4,
             text: 'Откуда узнали 2',
-            type: 'checkbox',
-            options: ['Answer A 2', 'Answer B 2', 'Answer C 2']
+            options: ['Answer A 2', 'Answer B 2', 'Answer C 2'],
+            multiple: true
         }
     ];
 
-    const selectedOptionsDefault = [
-        {
-            id: 1,
-            options: []
-        },
-        {
-            id: 2,
-            options: []
-        },
-        {
-            id: 3,
-            options: []
-        },
-        {
-            id: 4,
-            options: []
-        }
-    ];
-
-    const [responses, setResponses] = useState([]);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [existingQuestionIndex, setExistingQuestionIndex] = useState(0);
     const [inputQuestion, setInputQuestion] = useState("default");
     const handleInputChange = (value) => {
         setInputQuestion(value.target.value)
     };
+    const generateAnswer = () => {
+        var answers = [];
+        questions.forEach(element => {
+            var questionId = element.id;
+            answers.push({ questionId, answer: [] });
+        });
+        return answers;
+    };
 
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [selectedOptionsCheckbox, setSelectedOptionsCheckbox] = useState([]);
-    const [selectedOptionsRadio, setSelectedOptionsRadio] = useState([]);
-    const [selectedOptions, setSelectedOptions] = useState([]);
+    const [answers, setAnswers] = useState(generateAnswer());
+    const handleAnswerSelected = (questionId, answer) => {
+        const existingAnswerIndex = answers.findIndex((a) => a.questionId === questionId);
+    
+        if (existingAnswerIndex !== -1) {
+          const updatedAnswers = [...answers];
+          if (updatedAnswers[existingAnswerIndex].answer.includes(answer)) {
+            updatedAnswers[existingAnswerIndex].answer = updatedAnswers[existingAnswerIndex].answer.filter((item) => item !== answer);
+          } else {
+            updatedAnswers[existingAnswerIndex].answer = [...updatedAnswers[existingAnswerIndex].answer, answer];
+          }
+          setAnswers(updatedAnswers);
+        } else {
+          setAnswers([...answers, { questionId, answer: [answer] }]);
+        }
+      };
+
+    /*const [responses, setResponses] = useState([]);*/
 
     const handleNextQuestion = () => {
-        //debugger;
-        let isExistItem = false;
-        selectedOptions.map((item, index) => {
-            if (item.id == currentQuestionIndex)
-                isExistItem = true;
-        })
-        
-        saveSelectedOptions(isExistItem);
-        setSelectedOptionsCheckbox([])
+        const existingAnswerIndex = answers.findIndex((a) => a.questionId === currentQuestionIndex+1);
+        setExistingQuestionIndex(existingAnswerIndex);
+        console.log(existingAnswerIndex);
         setCurrentQuestionIndex(prevIndex => prevIndex + 1);
-        if (isExistItem)
-            setSelectedOptionsCheckbox(selectedOptions[currentQuestionIndex].options);
     };
 
     const handlePrevQuestion = () => {
-        debugger;
-        let isExistItem = false;
-        selectedOptions.map((item, index) => {
-            if (item.id == currentQuestionIndex)
-                isExistItem = true;
-        })
-        
-        saveSelectedOptions(isExistItem);
-        setSelectedOptionsCheckbox([])
+        const existingAnswerIndex = answers.findIndex((a) => a.questionId === currentQuestionIndex-1);
+        setExistingQuestionIndex(existingAnswerIndex);
         setCurrentQuestionIndex(prevIndex => prevIndex - 1);
-        selectedOptions.map((item, index) => {
-            if (item.id == currentQuestionIndex)
-                isExistItem = true;
-        })
-        if (isExistItem)
-            setSelectedOptionsCheckbox(selectedOptions[currentQuestionIndex].options);
     };
 
-    const saveSelectedOptions = (isExistItem) => {
-        if (isExistItem)
-        {
-            let options = selectedOptions[currentQuestionIndex].options;
-            selectedOptionsCheckbox.map((option, index) => {
-                if (options != null && !options.includes(option))
-                {
-                    options.push(option);
-                    setSelectedOptions([...selectedOptions, {id: currentQuestionIndex, options: options}]);
-                }
-            })
-        }
-        else
-        {
-            setSelectedOptions([...selectedOptions, {id: currentQuestionIndex, options: selectedOptionsCheckbox}]);
-        }
-
-        //setSelectedOptionsCheckbox([])
-    }
-
     const Check = () => {
-        console.log(inputQuestion)
-        console.log(selectedOptionsRadio)
-        console.log(selectedOptionsCheckbox)
-        console.log(selectedOptions)
+        console.log(currentQuestionIndex)
+        console.log(existingQuestionIndex)
+        console.log(answers)
+        console.log(answers[existingQuestionIndex])
+        console.log(answers[existingQuestionIndex]?.answer)
+        console.log(answers.find((a) => a.questionId === 2).answer.toString())
     }
 
     const Send = async () => {
         const form = {
             a: inputQuestion, 
-            b: selectedOptionsRadio.toString(), 
-            c: selectedOptionsCheckbox.toString()
+            b: answers.find((a) => a.questionId === 2).answer.toString(), 
+            c: answers.find((a) => a.questionId === 3).answer.toString()
         }
       
         const response = await fetch('api/send', {
@@ -139,15 +104,15 @@ export default function Survey() {
 
     return (
         <div>
-            <h1>{questions[currentQuestionIndex].text}</h1>
+            <h1 key={questions[currentQuestionIndex].id}>{questions[currentQuestionIndex].text}</h1>
             { 
-                questions[currentQuestionIndex].type == "input" ? 
-                <InputQuestion value={inputQuestion} onChange={handleInputChange} /> : 
-                questions[currentQuestionIndex].type == "radio" ?
-                <RadioQuestion options={questions[currentQuestionIndex].options} selectedOptions={selectedOptionsRadio} 
-                    setSelectedOptions={setSelectedOptionsRadio}/> :
-                <CheckboxQuestion id={questions[currentQuestionIndex].id} options={questions[currentQuestionIndex].options} selectedOptions={selectedOptionsCheckbox} 
-                    setSelectedOptions={setSelectedOptionsCheckbox}/>
+                questions[currentQuestionIndex].multiple ? 
+                    <CheckboxQuestion options={questions[currentQuestionIndex].options}
+                    checkedOptions={answers[existingQuestionIndex].answer} onChange={handleAnswerSelected} id={currentQuestionIndex}/>
+                    :  questions[currentQuestionIndex].options.length !== 0 ?
+                        <RadioQuestion options={questions[currentQuestionIndex].options}
+                        checkedOptions={answers[existingQuestionIndex].answer} onChange={handleAnswerSelected} id={currentQuestionIndex}/>
+                        : <InputQuestion value={inputQuestion} onChange={handleInputChange} />
             }
             {currentQuestionIndex > 0 && <button onClick={handlePrevQuestion}>Предыдущий вопрос</button>}
             {currentQuestionIndex < questions.length - 1 && <button onClick={handleNextQuestion}>Следующий вопрос</button>}
