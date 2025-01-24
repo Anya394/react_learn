@@ -18,7 +18,7 @@ export async function POST(req)
       range,
     });*/
     const content = await req.json();
-    
+
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.SHEET_ID,
       range: `Sheet1!A:C`,
@@ -26,7 +26,7 @@ export async function POST(req)
       insertDataOption: 'INSERT_ROWS',
       resource: {
         "majorDimension": "ROWS",
-        "values": [[content.a, content.b, content.c]]
+        "values": [content]
       }
     });
     console.log("Successful appended.")

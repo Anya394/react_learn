@@ -3,43 +3,22 @@ import AnswerOptions from './AnswerOptions';
 import RadioQuestion from './RadioQuestion';
 import InputQuestion from './InputQuestion';
 import CheckboxQuestion from './CheckboxQuestion';
+import questions from '../data/questions.json';
 
 export default function Survey() {
 
-    const questions = [
-        {
-            id: 1,
-            text: 'Ваше имя',
-            options: [],
-            multiple: false
-        },
-        {
-            id: 2,
-            text: 'Что хотите',
-            options: ['Option A', 'Option B', 'Option C'],
-            multiple: false
-        },
-        {
-            id: 3,
-            text: 'Откуда узнали',
-            options: ['Answer A', 'Answer B', 'Answer C'],
-            multiple: true
-        },
-        {
-            id: 4,
-            text: 'Откуда узнали 2',
-            options: ['Answer A 2', 'Answer B 2', 'Answer C 2'],
-            multiple: true
-        }
-    ];
-
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [existingQuestionIndex, setExistingQuestionIndex] = useState(0);
-    const [inputQuestion, setInputQuestion] = useState("default");
-    const handleInputChange = (value) => {
-        setInputQuestion(value.target.value)
+    const handleInputChange = (questionId, answer) => {
+        const existingAnswerIndex = answers.findIndex((a) => a.questionId === questionId);
+        console.log(existingAnswerIndex);
+        if (existingAnswerIndex !== -1)
+        {
+            const updatedAnswers = [...answers];
+            updatedAnswers[existingAnswerIndex].answer = [answer];
+            setAnswers(updatedAnswers);
+        }
     };
-    const generateAnswer = () => {
+    const initializationAnswers = () => {
         var answers = [];
         questions.forEach(element => {
             var questionId = element.id;
@@ -48,10 +27,9 @@ export default function Survey() {
         return answers;
     };
 
-    const [answers, setAnswers] = useState(generateAnswer());
+    const [answers, setAnswers] = useState(initializationAnswers());
     const handleAnswerSelected = (questionId, answer) => {
         const existingAnswerIndex = answers.findIndex((a) => a.questionId === questionId);
-    
         if (existingAnswerIndex !== -1) {
           const updatedAnswers = [...answers];
           if (updatedAnswers[existingAnswerIndex].answer.includes(answer)) {
@@ -65,54 +43,46 @@ export default function Survey() {
         }
       };
 
-    /*const [responses, setResponses] = useState([]);*/
-
     const handleNextQuestion = () => {
-        const existingAnswerIndex = answers.findIndex((a) => a.questionId === currentQuestionIndex+1);
-        setExistingQuestionIndex(existingAnswerIndex);
-        console.log(existingAnswerIndex);
         setCurrentQuestionIndex(prevIndex => prevIndex + 1);
     };
 
     const handlePrevQuestion = () => {
-        const existingAnswerIndex = answers.findIndex((a) => a.questionId === currentQuestionIndex-1);
-        setExistingQuestionIndex(existingAnswerIndex);
         setCurrentQuestionIndex(prevIndex => prevIndex - 1);
     };
 
     const Check = () => {
-        console.log(currentQuestionIndex)
-        console.log(existingQuestionIndex)
         console.log(answers)
-        console.log(answers[existingQuestionIndex])
-        console.log(answers[existingQuestionIndex]?.answer)
-        console.log(answers.find((a) => a.questionId === 2).answer.toString())
     }
 
     const Send = async () => {
-        const form = {
-            a: inputQuestion, 
-            b: answers.find((a) => a.questionId === 2).answer.toString(), 
-            c: answers.find((a) => a.questionId === 3).answer.toString()
-        }
+        const rows = [
+            answers.find((a) => a.questionId === 1).answer.toString(),
+            answers.find((a) => a.questionId === 2).answer.toString(), 
+            answers.find((a) => a.questionId === 3).answer.toString(),
+            answers.find((a) => a.questionId === 4).answer.toString()
+        ];
       
         const response = await fetch('api/send', {
             method: 'POST',
-            body: JSON.stringify(form)
+            body: JSON.stringify(rows)
         });
+
+        setAnswers(initializationAnswers());
+        setCurrentQuestionIndex(0);
     }
 
     return (
         <div>
-            <h1 key={questions[currentQuestionIndex].id}>{questions[currentQuestionIndex].text}</h1>
+            <h1 key={questions[currentQuestionIndex].id}>{questions[currentQuestionIndex].text} {questions[currentQuestionIndex].id}</h1>
             { 
                 questions[currentQuestionIndex].multiple ? 
                     <CheckboxQuestion options={questions[currentQuestionIndex].options}
-                    checkedOptions={answers[existingQuestionIndex].answer} onChange={handleAnswerSelected} id={currentQuestionIndex}/>
+                    checkedOptions={answers[currentQuestionIndex].answer} onChange={handleAnswerSelected} id={questions[currentQuestionIndex].id}/>
                     :  questions[currentQuestionIndex].options.length !== 0 ?
                         <RadioQuestion options={questions[currentQuestionIndex].options}
-                        checkedOptions={answers[existingQuestionIndex].answer} onChange={handleAnswerSelected} id={currentQuestionIndex}/>
-                        : <InputQuestion value={inputQuestion} onChange={handleInputChange} />
+                        checkedOptions={answers[currentQuestionIndex].answer} onChange={handleAnswerSelected} id={questions[currentQuestionIndex].id}/>
+                        : <InputQuestion value={answers[currentQuestionIndex].answer} onChange={handleInputChange} id={questions[currentQuestionIndex].id}/>
             }
             {currentQuestionIndex > 0 && <button onClick={handlePrevQuestion}>Предыдущий вопрос</button>}
             {currentQuestionIndex < questions.length - 1 && <button onClick={handleNextQuestion}>Следующий вопрос</button>}

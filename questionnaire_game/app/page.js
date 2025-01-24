@@ -7,7 +7,7 @@ export default function Home() {
       <div>
         <div>
         <Link href="/about">
-        fffffff
+        Опрос
         </Link>
         </div>
       </div>

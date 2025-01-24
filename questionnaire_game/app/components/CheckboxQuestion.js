@@ -7,7 +7,7 @@ export default function CheckboxQuestion(props) {
       {
         props.options.map((option, index) => (
           <div key={index} className='option'>
-              <input id={'checkbox'+props.id}
+              <input
                   type="checkbox"
                   value={option}
                   checked={props.checkedOptions.includes(option)}
