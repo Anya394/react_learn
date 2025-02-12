@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import "./style/InputQuestion.css";
 
 export default function InputQuestion(props) {
 
   return (
     <div>
-      <input 
+      <input className='input'
         type='text' 
         value={props.value} 
         onChange={(e) => props.onChange(props.id, e.target.value)}

@@ -4,6 +4,10 @@ import RadioQuestion from './RadioQuestion';
 import InputQuestion from './InputQuestion';
 import CheckboxQuestion from './CheckboxQuestion';
 import questions from '../data/questions.json';
+import "./style/Survey.css";
+import StartPage from "../page.js";
+import Link from "next/link";
+import { useRouter } from 'next/router'
 
 export default function Survey() {
 
@@ -51,17 +55,21 @@ export default function Survey() {
         setCurrentQuestionIndex(prevIndex => prevIndex - 1);
     };
 
+    const handleBack = () => {
+        setCurrentQuestionIndex(prevIndex => prevIndex - 1);
+    };
+
     const Check = () => {
         console.log(answers)
+        //<button onClick={Check} className='btn'>Check</button>
     }
 
     const Send = async () => {
-        const rows = [
-            answers.find((a) => a.questionId === 1).answer.toString(),
-            answers.find((a) => a.questionId === 2).answer.toString(), 
-            answers.find((a) => a.questionId === 3).answer.toString(),
-            answers.find((a) => a.questionId === 4).answer.toString()
-        ];
+        const rows = [];
+
+        answers.forEach(item => {
+            rows.push(item.answer.toString());
+        });
       
         const response = await fetch('api/send', {
             method: 'POST',
@@ -73,8 +81,8 @@ export default function Survey() {
     }
 
     return (
-        <div>
-            <h1 key={questions[currentQuestionIndex].id}>{questions[currentQuestionIndex].text} {questions[currentQuestionIndex].id}</h1>
+        <div className='question'>
+            <h1 key={questions[currentQuestionIndex].id} className='text caption'>{questions[currentQuestionIndex].text}</h1>
             { 
                 questions[currentQuestionIndex].multiple ? 
                     <CheckboxQuestion options={questions[currentQuestionIndex].options}
@@ -84,10 +92,12 @@ export default function Survey() {
                         checkedOptions={answers[currentQuestionIndex].answer} onChange={handleAnswerSelected} id={questions[currentQuestionIndex].id}/>
                         : <InputQuestion value={answers[currentQuestionIndex].answer} onChange={handleInputChange} id={questions[currentQuestionIndex].id}/>
             }
-            {currentQuestionIndex > 0 && <button onClick={handlePrevQuestion}>Предыдущий вопрос</button>}
-            {currentQuestionIndex < questions.length - 1 && <button onClick={handleNextQuestion}>Следующий вопрос</button>}
-            <button onClick={Check}>Check</button>
-            <button onClick={Send}>Send</button>
+            <div className='boxOneStr'>
+                {currentQuestionIndex > 0 && <button onClick={handlePrevQuestion} className='btn'>Предыдущий вопрос</button>}
+                {currentQuestionIndex < questions.length - 1 && <button onClick={handleNextQuestion} className='btn'>Следующий вопрос</button>}
+            </div>
+            {currentQuestionIndex == 0 && <Link href="./" className="btn">Назад</Link>}
+            {currentQuestionIndex == questions.length - 1 && <button onClick={Send} className='btn'><Link href="./">Send</Link></button>}
         </div>
     );
 };
