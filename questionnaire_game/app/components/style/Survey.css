@@ -3,14 +3,37 @@
   flex-direction: column;
 }
 
-.options{
+.optionsBox{
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.options{
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  background-color: rgb(0 0 0 / 0.5);
 }
 
 .boxOneStr{
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.captionBox{
+  margin: 0px 80px;
+}
+
+.text{
+  text-shadow: 0 0 30px rgb(0 0 0 / 0.9);
+}
+
+.goal{
+  margin: 0 15%;
+  text-align: center;
+  color: aquamarine;
+  text-shadow: 10px 10px 50px rgb(0 0 0);
+  font-size: 20px;
 }

@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "text": "Ваше имя",
+        "options": [],
+        "multiple": false
+    },
+    {
+        "id": 2,
+        "text": "Что хотите",
+        "options": ["Option A", "Option B", "Option C"],
+        "multiple": false
+    },
+    {
+        "id": 3,
+        "text": "Откуда узнали",
+        "options": ["Answer A", "Answer B", "Answer C"],
+        "multiple": true
+    },
+    {
+        "id": 4,
+        "text": "Откуда узнали 2",
+        "options": ["Answer A 2", "Answer B 2", "Answer C 2"],
+        "multiple": true
+    }
+]

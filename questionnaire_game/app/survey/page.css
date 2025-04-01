@@ -1,0 +1,8 @@
+:root {
+    --backImg: url('/static/backgrounds/name.png');
+  }
+
+body {
+    background-image: var(--backImg);
+    background-size: cover;
+  }

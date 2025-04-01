@@ -9,6 +9,9 @@ import StartPage from "../page.js";
 import Link from "next/link";
 import { useRouter } from 'next/router'
 
+const extentions = ".png')";
+const pathBg = "url('/static/backgrounds/";
+
 export default function Survey() {
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -49,10 +52,14 @@ export default function Survey() {
 
     const handleNextQuestion = () => {
         setCurrentQuestionIndex(prevIndex => prevIndex + 1);
+        var bg = pathBg + questions[currentQuestionIndex+1].name + extentions;
+        document.body.style.background = bg;
     };
 
     const handlePrevQuestion = () => {
         setCurrentQuestionIndex(prevIndex => prevIndex - 1);
+        var bg = pathBg + questions[currentQuestionIndex-1].name + extentions;
+        document.body.style.background = bg;
     };
 
     const handleBack = () => {
@@ -82,7 +89,7 @@ export default function Survey() {
 
     return (
         <div className='question'>
-            <h1 key={questions[currentQuestionIndex].id} className='text caption'>{questions[currentQuestionIndex].text}</h1>
+            <div className='captionBox'><h1 key={questions[currentQuestionIndex].id} className='text caption'>{questions[currentQuestionIndex].text}</h1></div>
             { 
                 questions[currentQuestionIndex].multiple ? 
                     <CheckboxQuestion options={questions[currentQuestionIndex].options}
@@ -90,7 +97,9 @@ export default function Survey() {
                     :  questions[currentQuestionIndex].options.length !== 0 ?
                         <RadioQuestion options={questions[currentQuestionIndex].options}
                         checkedOptions={answers[currentQuestionIndex].answer} onChange={handleAnswerSelected} id={questions[currentQuestionIndex].id}/>
-                        : <InputQuestion value={answers[currentQuestionIndex].answer} onChange={handleInputChange} id={questions[currentQuestionIndex].id}/>
+                        :  questions[currentQuestionIndex].goal == "" ?
+                            <InputQuestion value={answers[currentQuestionIndex].answer} onChange={handleInputChange} id={questions[currentQuestionIndex].id}/>
+                            : <div className='goal'> {questions[currentQuestionIndex].goal} </div>
             }
             <div className='boxOneStr'>
                 {currentQuestionIndex > 0 && <button onClick={handlePrevQuestion} className='btn'>Предыдущий вопрос</button>}

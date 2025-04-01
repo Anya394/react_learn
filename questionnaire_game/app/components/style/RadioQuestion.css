@@ -4,9 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(150, 147, 147);
-    border-radius: 20px;
+    border-radius: 5px;
     padding: 10px;
+    color: aquamarine;
 }
 
 .radio-label {
@@ -18,11 +18,11 @@
   position: relative;
   width: 30px;
   height: 30px;
-  background: #04d4b9;
+  background: aquamarine;
   box-shadow: inset 0 0 5px rgb(0 0 0 / 0.2);
   border-radius: 50%;
   border: 1px solid #323f45;
-  transition: 500ms;
+  transition: 300ms;
 }
 
 .radio-input::after {
@@ -34,14 +34,14 @@
   width: 0px;
   height: 0px;
   font-size: 26px;
-  transition: 500ms;
+  transition: 300ms;
   overflow: hidden;
 }
 
 .radio-input:checked::after {
   width: 30px;
   height: 30px;
-  transition: 500ms;
+  transition: 300ms;
   
 }
 
